@@ -25,6 +25,33 @@ import Layout from '@/layout'
  **/
 export default [
   {
+    path: '/password',
+    component: Layout,
+    meta: { title: '密码箱', icon: 'lock', roles: ['admin', 'edit'] },
+    children: [
+      {
+        path: 'index',
+        name: '密码箱',
+        component: () => import('@/views/password/index'),
+        meta: { title: '密码箱', icon: 'lock' }
+      }
+    ]
+  },
+  {
+    path: '/password',
+    component: Layout,
+    hidden: true,
+    meta: { title: '密码箱', icon: 'lock', roles: ['admin', 'edit'] },
+    children: [
+      {
+        path: 'add',
+        name: '密码箱',
+        component: () => import('@/views/password/add'),
+        meta: { title: '密码箱', icon: 'lock' }
+      }
+    ]
+  },
+  {
     path: '/form',
     component: Layout,
     meta: { title: '表单', icon: 'form', roles: ['admin', 'edit'] },

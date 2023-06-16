@@ -40,9 +40,9 @@
 
 <script setup>
 import Tinymce from "@/components/Tinymce";
-import { ref } from "vue"
-import { Message } from "element-ui"
-const form = ref()
+import { ref } from "vue";
+import { Message } from "element-ui";
+const form = ref();
 const formData = ref({
   name: "",
   region: "",
@@ -51,18 +51,18 @@ const formData = ref({
   delivery: false,
   type: [],
   resource: "",
-  desc: ""
-})
+  desc: "",
+});
 const onSubmit = () => {
-  console.log(this.form)
+  console.log(this.form);
   Message("submit!");
-}
+};
 const onCancel = () => {
   Message({
     message: "cancel!",
-    type: "warning"
+    type: "warning",
   });
-}
+};
 </script>
 
 <style scoped>
