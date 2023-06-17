@@ -1,7 +1,6 @@
 <template>
   <div class="app-container">
     <el-card class="box-card">
-      <el-button type="primary" @click="go2AddPage()">新增密码</el-button>
       <el-button type="success">密码备份</el-button>
     </el-card>
     <el-card class="box-card">
@@ -53,11 +52,12 @@
 </template>
 <script>
 import Tinymce from "@/components/Tinymce";
-
+const fs = require("fs");
+const path = require("path");
+const filePath = path.join(process.env.USERPROFILE, "password.json");
 export default {
   components: {
     Tinymce,
-    
   },
   data() {
     return {
@@ -69,6 +69,7 @@ export default {
         account: "",
         password: "",
         backup: "",
+        createTime: ""
       },
     };
   },
@@ -76,9 +77,68 @@ export default {
     go2AddPage() {
       this.$router.push({ path: "/password/add" });
     },
+    writeJson() {
+      // 读取文件
+      fs.readFile(filePath, "utf8", (err, data) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        // 将文件内容拆分为行数组
+        const lines = data.split("\n");
+
+        // 确保文件至少有两行
+        if (lines.length < 2) {
+          console.error("文件行数不足。");
+          return;
+        }
+
+        // 找到倒数第二行的索引
+        const secondLastLineIndex = lines.length - 1;
+
+        // 在倒数第二行位置上追加内容
+        // 如果文件内容至少有三行，证明已经有内容json，需要拼接逗号
+        if (lines.length >= 3) {
+          // 拼接逗号
+          lines.splice(secondLastLineIndex, 0,"," + JSON.stringify(this.formData));
+        } else {
+          lines.splice(secondLastLineIndex, 0, JSON.stringify(this.formData));
+        }
+
+        // 组合行数组为新的文件内容
+        const updatedContent = lines.join("\n");
+
+        // 写入更新后的内容到文件中
+        fs.writeFile(filePath, updatedContent, "utf8", (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          console.log("内容已成功追加到倒数第二行位置。");
+        });
+      });
+    },
     onSubmit() {
+      this.formData.createTime = new Date();
       console.log(this.formData);
-      this.$message("submit!");
+      fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+          // 文件不存在，创建文件
+          fs.writeFile(filePath, "[" + "\n" + "]", (err) => {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log("文件已创建并初始化成功。");
+              this.writeJson();
+            }
+          });
+        } else {
+          // 如果文件存在,直接从倒数第二行开始写起
+          this.writeJson();
+        }
+      });
+
+      this.$message("内容已保存" + filePath);
     },
     onCancel() {
       this.$router.push({ path: "/password/index" });

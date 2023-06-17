@@ -16,3 +16,5 @@ yarn-error.log*
 *.sln
 server/client/electron-vue-admin Setup 0.0.1.exe
 build/builder-effective-config.yaml
+build/electron-vue-admin Setup 0.0.1.exe
+build/electron-vue-admin Setup 0.0.1.exe.blockmap

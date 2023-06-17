@@ -3640,7 +3640,7 @@ ejs@^3.1.8:
 
 electron-builder@^24.4.0:
   version "24.4.0"
-  resolved "https://registry.npmjs.org/electron-builder/-/electron-builder-24.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-24.4.0.tgz#8846efa45bac8f6b9afc181abf71a4e12530f045"
   integrity sha512-D5INxodxaUIJgEX6p/fqBd8wQNS8XRAToNIJ9SQC+taNS5D73ZsjLuXiRraFGCB0cVk9KeKhEkdEOH5AaVya4g==
   dependencies:
     app-builder-lib "24.4.0"
@@ -7263,7 +7263,14 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxjs@*, rxjs@^7.8.0:
+rxjs@^7.5.2:
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
+  integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@^7.8.0:
   version "7.8.0"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.0.tgz"
   integrity sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==
