@@ -1,80 +1,84 @@
-# Electron-Vue-template
+# 综合工具箱
 
-> This is a project based on electron-vue, using the elementUI, vuex, vue-router, axios technology stack. This project is divided into two branches. The master maintains the original project structure and features for dependency updates, and the SynchronizedUpdates branch. It keeps the original file structure and the code part is completely customized by me personally; it includes: a complete background management interface, nedb database package, and two complete update download methods. If you feel redundant, you can delete it yourself.
+[tool_platform](https://github.com/yamonc/tool_platfom/)
 
-[中文在线文档](https://umbrella22.github.io/electron-vue-template-doc/)
-[国内访问地址](https://gitee.com/Zh-Sky/electron-vue-template)
-[国内文档访问地址](https://zh-sky.gitee.io/electron-vue-template-doc/)
-[vite 版本](https://github.com/umbrella22/electron-vite-template)
-[vite 版本（码云）](https://gitee.com/Zh-Sky/electron-vite-template)
+> 综合工具箱（名字实在是不会起，意会吧，言传就不必了）：这个项目主要是为了解决日常生活中的一点点痛点：比如密码箱，何为密码箱呢？如今大多数网站都有注册和登录功能，要么呢，有各种需要备份或者记录的信息（QQ邮箱的凭证，开发者需要记录下，或者github的AK和SK等），这种记录在网上的一些工具有可能会遭到泄露，所以将本地密码存到密码箱里就很有必要了。
 
-[Open in Visual Studio Code](https://open.vscode.dev/umbrella22/electron-vue-template)
-![GitHub Repo stars](https://img.shields.io/github/stars/umbrella22/electron-vue-template)
-[![vue](https://img.shields.io/badge/vue-2.7.10-brightgreen.svg)](https://github.com/vuejs/vue)
-[![element-ui](https://img.shields.io/badge/element--ui-2.15.9-brightgreen.svg)](https://github.com/ElemeFE/element)
-[![electron](https://img.shields.io/badge/electron-19.0.17-brightgreen.svg)](https://github.com/electron/electron)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/umbrella22/electron-vue-template/blob/master/LICENSE)
+## 🍎技术架构
 
-- electron of react [Electron-react-template](https://github.com/umbrella22/electron-react-template)
+[electron](https://www.electronjs.org/zh/docs/latest/tutorial/quick-start)+vue2
 
-### To run a project, you need to have **node version 16** or higher and **use yarn as your dependency management tool**
+框架用的是[electron-vue-template](https://gitee.com/Zh-Sky/electron-vue-template)，感谢大佬的开源。
 
-<p align="center">
-  <a href="https://github.com/umbrella22/electron-vue-template">
-    <img src="https://github.com/umbrella22/electron-vue-template/actions/workflows/build-test.yml/badge.svg">
-  </a>
-</p>
+纯前端项目，没有用到后端，**更不会保留任何数据到服务器上**。
 
-<h3 align="center">Thanks for support.</h3>
+## 🍉 解决的问题
 
-<p align="center">
-  <a href="https://www.jetbrains.com/?from=electron-vue-template" target="_blank">
-    <img width="160px" src="https://github.com/umbrella22/MCsever/blob/master/jetbrains.png">
-  </a>
-</p>
+目前综合工具箱里的功能只有《密码箱》的功能。
 
-#### Build Setup
+### 🍓密码箱
 
-```bash
-# install dependencies
-yarn or yarn install
+![image-20230617111859730](https://markdown-image-bed.oss-cn-beijing.aliyuncs.com/202306171118918.png)
 
-# serve with hot reload at localhost:9080
-yarn dev
+![image-20230617111918042](https://markdown-image-bed.oss-cn-beijing.aliyuncs.com/202306171119106.png)
 
-# build electron application for production
-yarn build
+![image-20230617112248464](https://markdown-image-bed.oss-cn-beijing.aliyuncs.com/202306171122534.png)
 
+#### 痛点
 
-```
+**网络上的密码无法管理。**
 
----
+#### 如何使用
 
-# Function list
+点击新增密码，按照提示输入后，可在当前的用户目录下找到password.json的文件，所有的密码都存在这个paasword.json中。
 
-- Auto update
-- Incremental update
-- Loading animation before startup
-- i18n
-- Incremental update (wait for test)
+密码备份功能比价鸡肋，后期去掉。
 
-# Built-in
+## 🍠如何启动
 
-- [vue-router](https://router.vuejs.org)
-- [vuex](https://vuex.vuejs.org)
-- [electron](http://www.electronjs.org/docs)
-- electron-updater
-- typescript
-- [element-plus](https://element.eleme.cn/#/en-US)
+### 前提
 
-# Note
+前提需要安装git、node.js、yarn/npm（npm好像在这里不好使）
 
-- [gitee](https://gitee.com/Zh-Sky/electron-vue-template) is only for domestic users to pull code，from github to synchronize，please visit github for PR
-- **Welcome to Issues and PR**
+### 二次开发
 
----
+如果是二次开发的话：
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
-Manage interface code address [here](https://github.com/PanJiaChen/electron-vue-admin)
+**pull代码**
 
-# [CHANGELOG](CHANGELOG.md)
+`git pull https://github.com/yamonc/tool_platfom.git `
+
+**安装安装包**
+
+`yarn `
+
+**启动项目**
+
+`yarn dev`
+
+### 直接使用
+
+两种方式，第一种[下载发版](https://gh.api.99988866.xyz/https://github.com/yamonc/tool_platfom/releases/download/V0.0.1/electron-vue-admin.Setup.0.0.1.exe)；
+
+第二种，在二次开发的基础上，自己打包：
+
+`yarn build:win64`
+
+打完包之后，会发现build包下有exe可执行文件：
+
+![image-20230617113946744](https://markdown-image-bed.oss-cn-beijing.aliyuncs.com/202306171139786.png)
+
+## 🍐后期目标
+
+性能优化（不得不说，electron太太太太慢了）
+
+密码修改。
+
+导入密码。
+
+支持sqllite，方便修改密码、删除密码。
+
+## 🍌CHANGELOG
+
+V0.0.1 新增密码箱功能；
+
