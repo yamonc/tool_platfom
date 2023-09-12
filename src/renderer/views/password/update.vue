@@ -42,7 +42,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">创建</el-button>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
             <el-button @click="onCancel">取消</el-button>
           </el-form-item>
         </el-form>
@@ -52,7 +52,8 @@
 </template>
 <script>
 import Tinymce from "@/components/Tinymce";
-import { save } from "../../api/password.js";
+import { getPasswordById, updatePasswordById } from "../../api/password.js";
+import { log } from "console";
 const fs = require("fs");
 const path = require("path");
 const filePath = path.join(process.env.USERPROFILE, "password.json");
@@ -73,58 +74,29 @@ export default {
       },
     };
   },
+  mounted() {
+    console.log(1111);
+    // 获取列表
+    // 获取路由id
+    let id = this.$route.params.id
+    getPasswordById(id).then((res) => {
+      console.log(res.data);
+      if(res.data.success){
+        this.formData = res.data.data
+      }else{
+        this.$message(res.data.message, "error")
+      }
+    });
+  },
   methods: {
     go2AddPage() {
       this.$router.push({ path: "/password/add" });
     },
-    writeJson() {
-      // 读取文件
-      fs.readFile(filePath, "utf8", (err, data) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        // 将文件内容拆分为行数组
-        const lines = data.split("\n");
 
-        // 确保文件至少有两行
-        if (lines.length < 2) {
-          console.error("文件行数不足。");
-          return;
-        }
-
-        // 找到倒数第二行的索引
-        const secondLastLineIndex = lines.length - 1;
-
-        // 在倒数第二行位置上追加内容
-        // 如果文件内容至少有三行，证明已经有内容json，需要拼接逗号
-        if (lines.length >= 3) {
-          // 拼接逗号
-          lines.splice(
-            secondLastLineIndex,
-            0,
-            "," + JSON.stringify(this.formData)
-          );
-        } else {
-          lines.splice(secondLastLineIndex, 0, JSON.stringify(this.formData));
-        }
-
-        // 组合行数组为新的文件内容
-        const updatedContent = lines.join("\n");
-
-        // 写入更新后的内容到文件中
-        fs.writeFile(filePath, updatedContent, "utf8", (err) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          console.log("内容已成功追加到倒数第二行位置。");
-        });
-      });
-    },
     onSubmit() {
+      let id = this.$route.params.id
       // 向后端发出请求
-      save(this.formData).then((res) => {
+      updatePasswordById(id, this.formData).then((res) => {
         if (res.status == 200) {
           this.$message({
             message: res.data.message,

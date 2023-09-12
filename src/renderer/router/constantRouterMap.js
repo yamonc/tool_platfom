@@ -48,6 +48,12 @@ export default [
         name: '密码箱',
         component: () => import('@/views/password/add'),
         meta: { title: '密码箱', icon: 'lock' }
+      },
+      {
+        path: 'update/:id',
+        name: '修改密码箱',
+        component: () => import('@/views/password/update'),
+        meta: { title: '修改密码箱', icon: 'lock' }
       }
     ]
   },

@@ -5,32 +5,47 @@
       <el-button type="success">密码备份</el-button>
     </el-card>
     <el-card class="box-card">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column fixed prop="name" label="平台名称" width="200" />
+      <el-table
+        :data="tableData.filter((data) => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+        style="width: 100%"
+      >
+      <el-table-column
+          fixed
+          prop="platformName"
+          label="平台名称"
+          width="200"
+        />
         <el-table-column prop="url" label="URL" width="230" />
-        <el-table-column prop="account" label="账号" width="200" />
+        <el-table-column prop="username" label="账号" width="200" />
         <el-table-column prop="password" label="密码" width="200" />
-        <el-table-column prop="backup" label="备注" width="300" />
-        <el-table-column prop="createTime" label="创建时间" width="200"/>
-        <!-- <el-table-column fixed="right" label="Operations">
-          <template #default>
-            <el-button link type="primary" size="small" @click="updatePassword"
-              >修改密码</el-button
-            >
-            <el-button link type="danger" size="small">删除密码</el-button>
+        <el-table-column prop="remark" label="备注" width="300" />
+        <el-table-column prop="createTime" label="创建时间" width="200" />
+        <el-table-column align="right">
+          <template slot="header" slot-scope="scope">
+            <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入关键字搜索"
+            />
           </template>
-        </el-table-column> -->
+          <template slot-scope="scope">
+            <el-button
+              size="small"
+              @click="updatePassword(scope.$index, scope.row)"
+              >修改</el-button
+            >
+            <el-button size="small" type="danger" @click="open(scope.row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
 </template>
   
 <script>
-import { log } from 'console';
-const fs = require("fs");
-const path = require("path");
-const readline = require('readline');
-const filePath = path.join(process.env.USERPROFILE, "password.json");
+import { getPasswordList, deletePasswordById } from "@/api/password.js";
 export default {
   components: {},
   data() {
@@ -38,52 +53,62 @@ export default {
       dialogVisible: false,
       form: null,
       formData: {
-        name: "",
+        platformName: "",
         url: "",
-        account: "",
+        username: "",
         password: "",
         backup: "",
-        createTime: ""
+        createTime: "",
       },
-      tableData : []
+      tableData: [],
+      search: ''
     };
   },
   methods: {
     go2AddPage() {
       this.$router.push({ path: "/password/add" });
     },
-    updatePassword() {
-      console.log(1112233);
+    updatePassword(index, row) {
+      let id = row.uuid;
+      // 根据uuid修改密码
+      this.$router.push({ path: "/password/update/" + id });
     },
-    handleClose() {
+    handleDelete(index, row) {
       console.log(1111);
+    },
+    open(row) {
+      console.log(row);
+      this.$alert("确定删除密码【" + row.platformName + "】吗？", "删除", {
+        confirmButtonText: "确定",
+        callback: (action) => {
+          //
+          if (action == "confirm") {
+            deletePasswordById(row.uuid).then((res) => {
+              this.$message({
+                type: "success",
+                message: "删除成功",
+              });
+              getPasswordList().then((res) => {
+                if (res.status == 200) {
+                  this.tableData = res.data.data;
+                } else {
+                  this.$message(res.data.message, "error");
+                }
+              });
+            });
+          } else {
+          }
+        },
+      });
     },
   },
   mounted() {
-    //读取json数据
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-      if (err) {
-        // 文件不存在，创建文件
-        fs.writeFile(filePath, "[" + "\n" + "]", (err) => {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log("文件已创建。");
-          }
-        });
+    // 获取列表
+    getPasswordList().then((res) => {
+      if (res.status == 200) {
+        this.tableData = res.data.data;
       } else {
-        //文件存在
-        // 读取json文件
-        fs.readFile(filePath, "utf-8", (err, data) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-
-          this.tableData = JSON.parse(data);
-          console.log(this.tableData);
-          // 处理jsonData，如将其传递给Vue组件进行展示
-        });
+        this.$message(res.data.message, "error");
       }
     });
   },

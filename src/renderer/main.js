@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { ipcRenderer } from 'electron'
+import { app, ipcRenderer } from 'electron'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import Router from 'vue-router'
 
@@ -53,4 +53,3 @@ new Vue({
   i18n,
   template: '<App/>',
 }).$mount('#app')
-
