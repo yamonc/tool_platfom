@@ -27,13 +27,13 @@ export default [
   {
     path: '/password',
     component: Layout,
-    meta: { title: '密码箱', icon: 'lock', roles: ['admin', 'edit'] },
+    meta: { title: '密码箱', icon: 'password-box', roles: ['admin', 'edit'] },
     children: [
       {
         path: 'index',
         name: '密码箱',
         component: () => import('@/views/password/index'),
-        meta: { title: '密码箱', icon: 'lock' }
+        meta: { title: '密码箱', icon: 'password-box' }
       }
     ]
   },
@@ -41,19 +41,44 @@ export default [
     path: '/password',
     component: Layout,
     hidden: true,
-    meta: { title: '密码箱', icon: 'lock', roles: ['admin', 'edit'] },
+    meta: { title: '密码箱', icon: 'password-box', roles: ['admin', 'edit'] },
     children: [
       {
         path: 'add',
         name: '密码箱',
         component: () => import('@/views/password/add'),
-        meta: { title: '密码箱', icon: 'lock' }
+        meta: { title: '密码箱', icon: 'password-box' }
       },
       {
         path: 'update/:id',
         name: '修改密码箱',
         component: () => import('@/views/password/update'),
-        meta: { title: '修改密码箱', icon: 'lock' }
+        meta: { title: '修改密码箱', icon: 'password-box' }
+      }
+    ]
+  },
+  {
+    path: '/car',
+    component: Layout,
+    meta: { title: '车辆档案', icon: 'password-box', roles: ['admin', 'edit'] },
+    children: [
+      {
+        path: 'index',
+        name: '车辆管理',
+        component: () => import('@/views/car/index'),
+        meta: { title: '车辆管理', icon: 'password-box' }
+      },
+      {
+        path: 'maintain',
+        name: '保养记录',
+        component: () => import('@/views/car/maintain'),
+        meta: { title: '保养记录', icon: 'password-box' }
+      },
+      {
+        path: 'table',
+        name: '保养表格',
+        component: () => import('@/views/car/record'),
+        meta: { title: '保养表格', icon: 'password-box' }
       }
     ]
   },
